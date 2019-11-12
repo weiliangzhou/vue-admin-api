@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.lottery.db.dao.ClinUserSummaryMapper">
+  <resultMap id="BaseResultMap" type="com.yd.lottery.db.domain.ClinUserSummary">
+    <id column="kid" jdbcType="BIGINT" property="kid" />
+    <result column="total_invest_amount" jdbcType="DECIMAL" property="totalInvestAmount" />
+    <result column="total_profit_amount" jdbcType="DECIMAL" property="totalProfitAmount" />
+    <result column="total_count_clocked" jdbcType="INTEGER" property="totalCountClocked" />
+    <result column="total_count_joined" jdbcType="INTEGER" property="totalCountJoined" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    kid, total_invest_amount, total_profit_amount, total_count_clocked, total_count_joined, 
+    nickname, icon_url, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yd.lottery.db.domain.ClinUserSummaryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleSelective" parameterType="map" resultMap="BaseResultMap">
+    select
+    <if test="example.distinct">
+      distinct
+    </if>
+    <choose>
+      <when test="selective != null and selective.length > 0">
+        <foreach collection="selective" item="column" separator=",">
+          ${column.aliasedEscapedColumnName}
+        </foreach>
+      </when>
+      <otherwise>
+        <include refid="Base_Column_List" />
+      </otherwise>
+    </choose>
+    from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from clin_user_summary
+    where kid = #{kid,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKeySelective" parameterType="map" resultMap="BaseResultMap">
+    select
+    <choose>
+      <when test="selective != null and selective.length > 0">
+        <foreach collection="selective" item="column" separator=",">
+          ${column.aliasedEscapedColumnName}
+        </foreach>
+      </when>
+      <otherwise>
+        <include refid="Base_Column_List" />
+      </otherwise>
+    </choose>
+    from clin_user_summary
+    where kid = #{kid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from clin_user_summary
+    where kid = #{kid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yd.lottery.db.domain.ClinUserSummaryExample">
+    delete from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yd.lottery.db.domain.ClinUserSummary">
+    insert into clin_user_summary (kid, total_invest_amount, total_profit_amount, 
+      total_count_clocked, total_count_joined, nickname, 
+      icon_url, create_time, update_time
+      )
+    values (#{kid,jdbcType=BIGINT}, #{totalInvestAmount,jdbcType=DECIMAL}, #{totalProfitAmount,jdbcType=DECIMAL}, 
+      #{totalCountClocked,jdbcType=INTEGER}, #{totalCountJoined,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{iconUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.lottery.db.domain.ClinUserSummary">
+    insert into clin_user_summary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="kid != null">
+        kid,
+      </if>
+      <if test="totalInvestAmount != null">
+        total_invest_amount,
+      </if>
+      <if test="totalProfitAmount != null">
+        total_profit_amount,
+      </if>
+      <if test="totalCountClocked != null">
+        total_count_clocked,
+      </if>
+      <if test="totalCountJoined != null">
+        total_count_joined,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="kid != null">
+        #{kid,jdbcType=BIGINT},
+      </if>
+      <if test="totalInvestAmount != null">
+        #{totalInvestAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalProfitAmount != null">
+        #{totalProfitAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCountClocked != null">
+        #{totalCountClocked,jdbcType=INTEGER},
+      </if>
+      <if test="totalCountJoined != null">
+        #{totalCountJoined,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yd.lottery.db.domain.ClinUserSummaryExample" resultType="java.lang.Long">
+    select count(*) from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update clin_user_summary
+    <set>
+      <if test="record.kid != null">
+        kid = #{record.kid,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalInvestAmount != null">
+        total_invest_amount = #{record.totalInvestAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalProfitAmount != null">
+        total_profit_amount = #{record.totalProfitAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalCountClocked != null">
+        total_count_clocked = #{record.totalCountClocked,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalCountJoined != null">
+        total_count_joined = #{record.totalCountJoined,jdbcType=INTEGER},
+      </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconUrl != null">
+        icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update clin_user_summary
+    set kid = #{record.kid,jdbcType=BIGINT},
+      total_invest_amount = #{record.totalInvestAmount,jdbcType=DECIMAL},
+      total_profit_amount = #{record.totalProfitAmount,jdbcType=DECIMAL},
+      total_count_clocked = #{record.totalCountClocked,jdbcType=INTEGER},
+      total_count_joined = #{record.totalCountJoined,jdbcType=INTEGER},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      icon_url = #{record.iconUrl,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.lottery.db.domain.ClinUserSummary">
+    update clin_user_summary
+    <set>
+      <if test="totalInvestAmount != null">
+        total_invest_amount = #{totalInvestAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalProfitAmount != null">
+        total_profit_amount = #{totalProfitAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="totalCountClocked != null">
+        total_count_clocked = #{totalCountClocked,jdbcType=INTEGER},
+      </if>
+      <if test="totalCountJoined != null">
+        total_count_joined = #{totalCountJoined,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where kid = #{kid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.lottery.db.domain.ClinUserSummary">
+    update clin_user_summary
+    set total_invest_amount = #{totalInvestAmount,jdbcType=DECIMAL},
+      total_profit_amount = #{totalProfitAmount,jdbcType=DECIMAL},
+      total_count_clocked = #{totalCountClocked,jdbcType=INTEGER},
+      total_count_joined = #{totalCountJoined,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where kid = #{kid,jdbcType=BIGINT}
+  </update>
+  <select id="selectOneByExample" parameterType="com.yd.lottery.db.domain.ClinUserSummaryExample" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    limit 1
+  </select>
+  <select id="selectOneByExampleSelective" parameterType="map" resultMap="BaseResultMap">
+    select
+    <choose>
+      <when test="selective != null and selective.length > 0">
+        <foreach collection="selective" item="column" separator=",">
+          ${column.aliasedEscapedColumnName}
+        </foreach>
+      </when>
+      <otherwise>
+        <include refid="Base_Column_List" />
+      </otherwise>
+    </choose>
+    from clin_user_summary
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    <if test="example.orderByClause != null">
+      order by ${example.orderByClause}
+    </if>
+    limit 1
+  </select>
+</mapper>

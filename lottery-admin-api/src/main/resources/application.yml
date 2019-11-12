@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  messages:
+    encoding: UTF-8
+
+
+server:
+  port: 18083
+
+pagehelper:
+  helperDialect:  mysql
+  reasonable: true
+  supportMethodsArguments:  true
+  params: count=countSql
+
+logging:
+  level:
+    root:  ERROR
+    org.springframework:  ERROR
+    org.mybatis:  INFO
+    com.yd.lottery.admin:  INFO
+    com.yd.lottery:  INFO

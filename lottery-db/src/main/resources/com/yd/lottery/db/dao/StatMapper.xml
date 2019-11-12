@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.lottery.db.dao.StatMapper">
+    <select id="statUser" resultType="map">
+        select
+        substr(create_time,1,10) as day,
+        count(distinct kid) as users
+        from user_base
+        group by substr(create_time,1,10)
+    </select>
+    <select id="statOrder" resultType="map">
+        select
+        substr(add_time,1,10) as day,
+        count(id) as orders,
+        count(distinct user_id) as customers,
+        sum(actual_price) as amount,
+        round(sum(actual_price)/count(distinct user_id),2) as pcr
+        from litemall_order
+        where order_status in(401,402)
+        group by substr(add_time,1,10)
+    </select>
+    <select id="statGoods" resultType="map">
+        select
+        substr(add_time,1, 10) as day,
+        count(distinct order_id) as orders,
+        sum(number) as products,
+        sum(number*price) as amount
+        from litemall_order_goods
+        group by substr(add_time,1, 10)
+    </select>
+    <select id="totalCountJoined" resultType="java.lang.Long">
+        SELECT sum(total_count_joined) from clin_user_summary
+    </select>
+    <select id="totalCountClocked" resultType="java.lang.Long">
+        SELECT sum(total_count_clocked) from clin_user_summary
+    </select>
+    <select id="todayTakeInCount" resultType="java.lang.Long">
+        SELECT
+        count( DISTINCT kid )
+        FROM
+        clin_task_user
+        WHERE
+       <![CDATA[  create_time >= DATE_FORMAT( CURDATE( ), '%Y-%m-%d %H:%i:%s' )
+        AND create_time <= DATE_SUB( DATE_ADD( '2019-08-08', INTERVAL 1 DAY ), INTERVAL 1 SECOND )
+        ]]>
+    </select>
+</mapper>

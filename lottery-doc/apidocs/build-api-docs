@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+work_path=$(dirname $(greadlink -f "$0"))
+
+## core 模块
+core_src_path=${work_path}/../../lottery-admin-api/src/main/java/com/yd/lottery/admin/web
+core_doc_path=${work_path}/apidoc-core
+mkdir -p ${core_doc_path}
+apidoc -i ${core_src_path} -o ${core_doc_path}
+
+
